@@ -51,11 +51,9 @@ class Canvas extends React.Component {
 
     return (
       <div id="canvas">
-        <P5Wrapper
-          sketch={sketch}
-        />
-          <RaisedButton className="canvas-button" label="Save" primary={true} onClick={this.saveBoard} />
-          <RaisedButton className="canvas-button" label="Clear" primary={true} onClick={this.clearBoard} />
+        <P5Wrapper sketch={sketch} />
+        <RaisedButton className="canvas-button" label="Save" primary={true} onClick={this.saveBoard} />
+        <RaisedButton className="canvas-button" label="Clear" primary={true} onClick={this.clearBoard} />
       </div>
     );
   }
