@@ -1,0 +1,54 @@
+body{
+  background-image: linear-gradient(rgba(255,255,255,0.7),rgba(255,255,255,0.1)), url("http://publicsf.com/wp/wp-content/uploads/2016/05/18446-carina-nebula-1920x1200-space-wallpaper-1-1-1200x750.jpg");
+  /* background: url("http://publicsf.com/wp/wp-content/uploads/2016/05/18446-carina-nebula-1920x1200-space-wallpaper-1-1-1200x750.jpg"); */
+  background-size: cover;
+  /* background-position:center; */
+  /* opacity: 0.2; 
+  z-index: -1;
+  width: 100%; */
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  z-index: 1
+}
+
+#canvasWrapper {
+  position: center;
+  padding-left: 50px;
+}
+
+#canvas {
+  position: relative;
+  width: 505px;
+  height: 605px;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%);
+}
+.canvas-button {
+  position: relative;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+/* .material-icons {
+  border-color: blue;
+} */
+
+#TMS {
+  padding-left: 50px;
+}
+
+#logo {
+  position: absolute;
+  height: 501px;
+  width: 501px;
+  top: 10%;
+  left: 40%;
+  background-image: url("http://i701.photobucket.com/albums/ww15/szmoon/stardust-logo_zpsxfhbtji6.jpg");
+  z-index: -1;
+}
+
+
