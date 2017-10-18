@@ -1,10 +1,9 @@
 import React from 'react';
-import Canvas from './Canvas.jsx';
 
 class App extends React.Component {
   
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.state = {};
   }
 

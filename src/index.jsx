@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Cluster from './Cluster.jsx';
+// import Cluster from './Cluster.jsx';
+import Login from './login.jsx';
 import InfiniteSpace from './InfiniteSpace.jsx';
 import Calendar from './Calendar.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
    <MuiThemeProvider muiTheme={getMuiTheme()}> 
     <BrowserRouter>
       <div>
-        <Route path='/' component={Cluster} />
+        <Route path='/' component={Login} />
         <Route path='/InfiniteSpace' component={InfiniteSpace} />
         <Route path='/calendar' component={Calendar} />
         <Route path='/tms' component={TMS} />
