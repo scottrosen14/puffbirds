@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "webpack",
     "build": "webpack -p",
-    "start": "nodemon server.js"
+    "start": "nodemon server/server.js"
   },
   "keywords": [
     "react",
