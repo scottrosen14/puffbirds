@@ -1,8 +1,11 @@
 const pg = require('pg');
 
 
-const connectionStr = 'postgres://zyfrobhu:NL5fpVCjHv9oTkrS-D_8Lz5yLK2kD8qY@stampy.db.elephantsql.com:5432/zyfrobhu';
+const connectionStr = 'postgres://bhtbugus:WXESMotOjz0DzpkcjU5-iSnIf8dtEMMv@elmer.db.elephantsql.com:5432/bhtbugus';
 
+// create a db object in which to store the client parameter
+// assign the client to the property conn
+// export the db object to be used in other files
 const db = {};
 
 pg.connect(connectionStr, (err, client, done) => {

@@ -10,6 +10,7 @@ const socket = require('socket.io');
 
 const todoController = require('./controllers/todoController');
 const spaceController = require('./controllers/spaceController');
+const calendarController = require('./controllers/calendarController');
 
 
 const compiler = webpack(webpackConfig);
@@ -31,7 +32,6 @@ app.use(historyApiFallback({
 }));
 
 
-
 app.use(express.static(__dirname + '/../www'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,7 +47,6 @@ app.post('/api/todo', todoController.addTodo);
 app.get('/api/space', spaceController.getSpace);
 app.post('/api/update/space', spaceController.updateSpace);
 app.post('/api/clear/space', spaceController.clearSpace);
-
 
 //Calendar
 app.get('/api/cal', calendarController.getEvents);
