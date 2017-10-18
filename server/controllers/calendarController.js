@@ -25,15 +25,15 @@ const calendarController = {};
 calendarController.getEvents = (req, res, next) => {
   const rows = [];
   // pg.connect(connectionStr, (err, client, done) => {
-  db.conn.query('SELECT * FROM events WHERE year=($1) AND month=($2) AND day=($3)', [req.body.year, req.body.month, req.body.day], (err, data) => {
+  db.conn.query('SELECT * FROM events WHERE year=($1) AND month=($2)', [req.body.year, req.body.month], (err, data) => {
     // after querying the sql command, elephantsql passes a result object into the data parameter with the properties rows, fields, etc.
     // the property rows is an array of objects
     // place next() within the anonymous callback to avoid async issues
     if (err) {
       console.log(err);
     } else {
-      console.log('data', data);
-      res.json(data.rows);
+      console.log('data', data.rows);
+      res.status(200).json(data.rows);
       next();
     }
   });

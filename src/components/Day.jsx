@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styles from './../styles/week.css';
-import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 
 const Day = (props) => {
