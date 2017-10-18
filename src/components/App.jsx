@@ -6,6 +6,8 @@ import Cluster from './Cluster.jsx';
 import Calendar from './Calendar.jsx';
 import Canvas from './Canvas.jsx';
 import TMS from './TMS.jsx';
+import Login from './login.jsx';
+
 
 class App extends React.Component {
   
@@ -16,18 +18,22 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>        
+      <div>
         <Route 
           path='/' 
           render = { (props) => <Cluster {...props} /> }  
         />
+        <Route 
+          exact path='/' 
+          render = { (props) => <Login {...props} /> }  
+        />  
         <Route 
           exact path='/InfiniteSpace'
           render={ (props) =>  <InfiniteSpace {...props}/> }
         />
         <Route 
           exact path = '/calendar' 
-          render={(props) => <Calendar {...props} />} 
+          render={(props) =>  <Calendar {...props} /> } 
         />
         <Route 
           exact path = '/tms' 
