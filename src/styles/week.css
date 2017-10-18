@@ -1,0 +1,16 @@
+.row {
+  padding-left: 13px;
+  display: inline-block;
+  width: 90%;
+  height: 15%;
+  background-color: #C98C32;
+  margin-left: 5%;
+}
+
+.day {
+  float: left;
+  margin: 2px;
+  width: 13%;
+  height: 100%;
+  background-color: #CB63BE;
+}

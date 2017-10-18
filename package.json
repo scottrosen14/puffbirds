@@ -15,7 +15,7 @@
     "minimal",
     "starter"
   ],
-  "author": "Brandon Danh, Selina Zawacki, Pamela Lam, Kelly Gilliam",
+  "author": "",
   "license": "",
   "repository": {
     "type": "git",
@@ -38,7 +38,6 @@
     "pg-hstore": "^2.3.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-google-login-component": "^0.9.0",
     "react-p5-wrapper": "0.0.4",
     "react-router-dom": "^4.2.2",
     "socket.io": "^2.0.3",
