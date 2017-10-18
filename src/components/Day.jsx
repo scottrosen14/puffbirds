@@ -8,10 +8,24 @@ const Day = (props) => {
   const { dayData } = props;
 
   const dayOfMonth = Object.keys(dayData).filter((key) => !Number.isNaN(parseInt(key)))[0];
+  const dayType = dayData.thisMonth ? "day-text" : "day-text-grey";
+
+  let bodyText = '';
+  if (dayData[dayOfMonth].length > 0) {
+    bodyText = 'Info'
+  }
+
 
   return (
     <div className="day">
-      {dayOfMonth}
+      <div className="day-heading">
+        <div className={dayType}>
+          {dayOfMonth}
+        </div>
+      </div>
+      <div className="day-body">
+        {bodyText}
+      </div>
     </div>
   );
 };
