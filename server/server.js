@@ -111,7 +111,10 @@ app.post('/api/clear/space', spaceController.clearSpace);
 //Calendar
 app.get('/api/cal', calendarController.getEvents);
 app.post('/api/cal', calendarController.getEvents);
-app.post('/api/cal/addevent', calendarController.addEvent);
+app.post('/api/cal/addevent', calendarController.addRow);
+app.put('/api/cal', calendarController.updateRow);
+app.delete('/api/cal', calendarController.removeRow);
+
 
 
 const server = app.listen(3000, function () {
