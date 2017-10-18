@@ -4,7 +4,7 @@ import DatePicker from 'material-ui/DatePicker';
 
 const Day = (props) => {
 
-  const { dayData } = props;
+  const { dayData, showDay, weekNum, dayNum } = props;
 
   const dayOfMonth = Object.keys(dayData).filter((key) => !Number.isNaN(parseInt(key)))[0];
   const dayType = dayData.thisMonth ? "day-text" : "day-text-grey";
@@ -14,9 +14,15 @@ const Day = (props) => {
     bodyText = 'Info'
   }
 
+  function dayClicked() {
+    if(dayData.thisMonth) {
+      console.log("dayOfMonth", dayOfMonth);
+      showDay(weekNum, dayNum, dayOfMonth);
+    }
+  }
 
   return (
-    <div className="day">
+    <div className="day" onClick={dayClicked} >
       <div className="day-heading">
         <div className={dayType}>
           {dayOfMonth}

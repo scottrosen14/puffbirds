@@ -30,9 +30,8 @@ calendarController.getEvents = (req, res, next) => {
     // the property rows is an array of objects
     // place next() within the anonymous callback to avoid async issues
     if (err) {
-      console.log(err);
+      console.log('Error: ', err);
     } else {
-      console.log('data', data.rows);
       res.status(200).json(data.rows);
       next();
     }
@@ -46,13 +45,15 @@ calendarController.addEvent = (req, res, next) => {
   // console.log('body-------', req.body);
   // console.log('email-------', req.body.clientemail);
   const data = [req.body.clientemail, req.body.year, req.body.month, req.body.day, req.body.event];
+  console.log("data to insert", data);
   let queryStr = 'INSERT INTO events (clientemail, year, month, day, event) VALUES ($1, $2, $3, $4, $5)';
 
   db.conn.query(queryStr, data, (err, result) => {
     if (err) {
       console.log(err);
-      throw new Error(err);
+      res.status(400).send({ errror: err });
     }
+    res.status(200).send('Success inserting row');
     next();
   });
 }
