@@ -6,9 +6,10 @@ import {grey300, purple50} from 'material-ui/styles/colors';
 
 class TMS extends React.Component {
   constructor(props) {
+    console.log("TMS Constructor");
     super(props);
     this.state = {
-      data: [],
+      data: []
     };
 
     this.removeTask = this.removeTask.bind(this);
@@ -17,28 +18,28 @@ class TMS extends React.Component {
   }
 
   componentWillMount() {
-    fetch('/api/todos')
+    fetch('/api/todo')
       .then(response => response.json())
-      .then(data => this.setState({ data: data }));
+      .then(data => {
+        return this.setState({ data: data });
+      });
   }
 
-  addTask(todo) {
-    console.log(todo);
-    const task = todo;
+  addTask(task) {
     const data = [...this.state.data, task];
-    this.setState({ data: data }, this.updateData);
+    this.setState({ data: data });
+    fetch()
   }
 
   removeTask(task) {
-    console.log(task);
-    let data = this.state.data;
-    data.splice(data.indexOf(task),1);
-    this.setState({ data: data }, this.updateData);
+    let data = [...this.state.data];
+    data.splice(data.indexOf(task), 1);
+    this.setState({ data: data });
+
   }
 
   updateData() {
     let data = this.state;
-    console.log(data);
     fetch('/api/todos', {
     method: "POST",
     headers: {'Content-Type': 'application/json'},
