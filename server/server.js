@@ -7,10 +7,53 @@ const bodyParser = require('body-parser');
 const app = express();
 const socket = require('socket.io');
 
+/**
+ * 
+ */
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const morgan = require('morgan');
+/**
+ * 
+ */
 
 const todoController = require('./controllers/todoController');
 const spaceController = require('./controllers/spaceController');
 const calendarController = require('./controllers/calendarController');
+
+/**
+ * config middleware passport for third party server
+ */
+require('./passport')(passport);
+
+/**
+ * a logger middleware for debugging purpose
+ */
+app.use(morgan('dev'));
+
+/**
+ * cookie parser
+ */
+app.use(cookieParser());
+
+/**
+ * allowCrossDomain - Sets headers to allow for CORS
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+const allowCrossDomain = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+}
+// Add allowCrossDomain as middleware
+app.use(allowCrossDomain);
+
+
+
 
 
 const compiler = webpack(webpackConfig);
@@ -38,6 +81,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
+/**
+ * passport middleware
+ */
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+/**
+ * get route for google oauth
+ */
+require('./routes.js')(app, passport);
+
+
 //Todo
 // app.get('tms', todoController.getTodo);
 app.get('/api/todo', todoController.getTodo);
@@ -54,7 +110,7 @@ app.post('/api/cal', calendarController.getEvents);
 app.post('/api/cal/addevent', calendarController.addEvent);
 
 
-const server = app.listen(8080, function () {
+const server = app.listen(3000, function () {
   const host = server.address().address;
   const port = server.address().port;
   console.log('Example app listening at http://%s:%s', host, port);

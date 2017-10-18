@@ -6,6 +6,8 @@ import Cluster from './Cluster.jsx';
 import Calendar from './Calendar.jsx';
 import Canvas from './Canvas.jsx';
 import TMS from './TMS.jsx';
+import Login from './login.jsx';
+
 
 class App extends React.Component {
   
@@ -16,7 +18,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>        
+      <div>
+        {/* <Route 
+          path='/' 
+          render = { (props) => <Login {...props} /> }  
+        />        */}
         <Route 
           path='/' 
           render = { (props) => <Cluster {...props} /> }  
