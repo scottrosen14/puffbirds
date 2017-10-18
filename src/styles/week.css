@@ -3,7 +3,7 @@
   display: inline-block;
   width: 90%;
   height: 15%;
-  background-color: #C98C32;
+  background-color: #D4D2D7;
   margin-left: 5%;
 }
 
@@ -12,5 +12,27 @@
   margin: 2px;
   width: 13%;
   height: 100%;
-  background-color: #CB63BE;
+
+}
+
+.day-heading {
+  width: 100%;
+  height: 19%;
+  background-color: #91B7B0;
+}
+
+.day-body {
+  width: 100%;
+  height: 50%;
+  background-color: #E6E4E8;
+  text-align: center;
+  padding-top: 25px;
+}
+
+.day-text {
+  color: black;
+}
+
+.day-text-grey {
+  color: grey;
 }

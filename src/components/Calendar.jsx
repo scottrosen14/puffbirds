@@ -14,6 +14,7 @@ class Calendar extends React.Component {
     super(props);
     this.state = {};
     this.updateStateWithData = this.updateStateWithData.bind(this);
+
   }
 
   componentWillMount() {
@@ -35,6 +36,19 @@ class Calendar extends React.Component {
     //   .then(response => response.json())
     //   .then(results => {
       // var mydate = 
+
+    let body = { month, year };
+   
+
+    fetch('/api/cal', {
+        method: 'post',
+        body: JSON.stringify(body)
+      }).then(function(response) {
+        return response.json();
+      }).then(function(data) {
+        console.log('fetched DATA: ', data);
+      });  
+        
 
         const results = [ {
                             event_id: 3,
@@ -79,16 +93,11 @@ class Calendar extends React.Component {
               thisDayObj.thisMonth = false;
               continue;
             }
-            if (week >= 4) {
-                  console.log("dayOfMonth", dayOfMonth);
-                  console.log("lastDayOfMonth", lastDayOfMonth);
-              if (dayOfMonth > lastDayOfMonth) {
-                console.log('here');
-                thisDayObj[dayOfNewMonth] = [];
-                thisDayObj.thisMonth = false;
-                dayOfNewMonth += 1;
-                continue;
-              }
+            if (week >= 4 && dayOfMonth > lastDayOfMonth) {
+              thisDayObj[dayOfNewMonth] = [];
+              thisDayObj.thisMonth = false;
+              dayOfNewMonth += 1;
+              continue;
             }
             thisDayObj[dayOfMonth] = results.filter((event) => {
               return event.day === dayOfMonth;
@@ -101,7 +110,7 @@ class Calendar extends React.Component {
         //FILL Day Arrays with Data...
       // });
     // GET MONTH DATA - SETSTATE()
-    this.setState({ month: 9, year: 2017, eventData });
+    this.setState({ month, year, eventData });
 
   };
 
@@ -126,8 +135,8 @@ class Calendar extends React.Component {
         <div id="TMS">
           <h1>CALENDAR</h1>
           <div className="container" >
-            <CalendarHeading month={this.state.month} year={this.state.year} />
-            <div className="calendar" onClick={ () => console.log(this.state)}> 
+            <CalendarHeading month={this.state.month} year={this.state.year} updateStateWithData={this.updateStateWithData} />
+            <div className="calendar"> 
               {weekArr}
             </div>
           </div>

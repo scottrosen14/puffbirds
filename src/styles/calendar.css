@@ -8,14 +8,14 @@
 
 .container {
   display: block;
-  background-color: red;
-  width: 92%;
+  background-color: #D4D2D7;
+  width: 88%;
   height: 85%;
 }
 
 .calendar {
   margin-top: 15px;
-  background-color: green;
+  background-color: #D4D2D7;
   height: 85%;
 }
 
