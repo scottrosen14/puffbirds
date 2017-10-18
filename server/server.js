@@ -2,6 +2,7 @@ const express = require('express');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config.js');
+const historyApiFallback = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
 const app = express();
 const socket = require('socket.io');
@@ -14,7 +15,6 @@ const calendarController = require('./controllers/calendarController');
 
 const compiler = webpack(webpackConfig);
 
-
 app.use(webpackDevMiddleware(compiler, {
   hot: true,
   filename: 'bundle.js',
@@ -22,20 +22,24 @@ app.use(webpackDevMiddleware(compiler, {
   stats: {
     colors: true,
   },
-  historyApiFallback: true,
+  historyApiFallback: true
 }));
 
-console.log('before ...ww');
+console.log('__dirname', __dirname);
+
+app.use(historyApiFallback({
+  verbose: false
+}));
+
 
 app.use(express.static(__dirname + '/../www'));
-
-console.log('after ...ww')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
 //Todo
+// app.get('tms', todoController.getTodo);
 app.get('/api/todo', todoController.getTodo);
 app.post('/api/todo', todoController.addTodo);
 
@@ -50,7 +54,7 @@ app.post('/api/cal', calendarController.getEvents);
 app.post('/api/cal/addevent', calendarController.addEvent);
 
 
-const server = app.listen(3000, function () {
+const server = app.listen(8080, function () {
   const host = server.address().address;
   const port = server.address().port;
   console.log('Example app listening at http://%s:%s', host, port);
