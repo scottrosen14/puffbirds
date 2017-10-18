@@ -29,12 +29,12 @@ spaceController.getSpace = (req, res, next) => {
 
 // PUT /api/update/space
 /*
-Input Body: 
+Input Body:
 {
     coords_x = [1,2,3,4,5,...],
     coords_y = [1,2,3,4,5,...]
 }*/
-spaceController.updateSpace = (req, res, next) => { 
+spaceController.updateSpace = (req, res, next) => {
 
   let results;
   // const data = { coords_x: req.body.coords_x, coords_y: req.body.coords_y };
@@ -51,7 +51,7 @@ spaceController.updateSpace = (req, res, next) => {
 
 
 
-spaceController.clearSpace = (req, res, next) => { 
+spaceController.clearSpace = (req, res, next) => {
   let results;
   db.conn.query('UPDATE "Space" SET coord_x=($1), coord_y=($2) WHERE _id=($3)',
     [[], [], 1]);

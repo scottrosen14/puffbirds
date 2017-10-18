@@ -10,6 +10,7 @@ const socket = require('socket.io');
 
 const todoController = require('./controllers/todoController');
 const spaceController = require('./controllers/spaceController');
+const calendarController = require('./controllers/calendarController');
 
 
 const compiler = webpack(webpackConfig);
@@ -31,7 +32,6 @@ app.use(historyApiFallback({
 }));
 
 
-
 app.use(express.static(__dirname + '/../www'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,44 +48,11 @@ app.get('/api/space', spaceController.getSpace);
 app.post('/api/update/space', spaceController.updateSpace);
 app.post('/api/clear/space', spaceController.clearSpace);
 
-
 //Calendar
-// /api/cal output in the form of
-/*
-[
-  {
-      "_id": 1,
-      "month": 10,
-      "day": 1,
-      "events": ""
-  },
-  {
-      "_id": 2,
-      "month": 10,
-      "day": 2,
-      "events": ""
-  },
-  [...]
-]
-*/
-app.get('/api/cal', (req, res, next) => {
-  const results = [];
-  pg.connect(connectionString, (err, client, done) => {
-    if (err) {
-      done();
-      console.log(err);
-      return res.status(500).json({ success: false, data: err });
-    }
-    const query = client.query('SELECT * FROM "Cal";');
-    query.on('row', (row) => {
-      results.push(row);
-    });
-    query.on('end', () => {
-      done();
-      return res.json(results);
-    });
-  });
-});
+app.get('/api/cal', calendarController.getEvents);
+app.post('/api/cal', calendarController.getEvents);
+app.post('/api/cal/addevent', calendarController.addEvent);
+
 
 const server = app.listen(8080, function () {
   const host = server.address().address;
@@ -101,7 +68,7 @@ io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
   console.log('new connection: ' + socket.id); // logs when new window is opened
-  
+
   socket.on('mouse', mouseMsg); // listens for any 'mouse' event
   // calls this when 'mouse' event is heard
   function mouseMsg(mousePosition) {
