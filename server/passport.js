@@ -3,6 +3,18 @@ var configAuth = require('./auth');
 
 
 module.exports = function(passport) {
+
+	passport.serializeUser(function(user, done) {
+		done(null, user);
+	})
+
+	passport.deserializeUser(function(obj, done) {
+		done(null, obj);
+	})
+
+	/**
+	 * google verify function
+	 */
     passport.use(new GoogleStrategy({
 	    clientID: configAuth.googleAuth.clientID,
 	    clientSecret: configAuth.googleAuth.clientSecret,
@@ -13,7 +25,7 @@ module.exports = function(passport) {
                 console.log('accessToken', accessToken);
                 console.log('refreshToken', refreshToken);
                 console.log('profile', profile);
-                done();
+                return done(null, profile);
 	    	});
 	    }
 

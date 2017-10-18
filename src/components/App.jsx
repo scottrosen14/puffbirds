@@ -19,12 +19,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Route 
+        {/* <Route 
           path='/' 
           render = { (props) => <Login {...props} /> }  
-        />       
+        />        */}
         <Route 
-          path='/Cluster' 
+          path='/' 
           render = { (props) => <Cluster {...props} /> }  
         />
         <Route 
