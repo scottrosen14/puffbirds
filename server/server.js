@@ -89,9 +89,13 @@ app.use(passport.session());
 
 
 /**
- * get route for google oauth
+ * handle route for google oauth
  */
-require('./routes.js')(app, passport);
+app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));    
+app.get('/auth/google/callback', passport.authenticate('google', { 
+                                                                    successRedirect: '/calendar',
+                                                                    failureRedirect: '/' 
+                                                                  } ));
 
 
 //Todo

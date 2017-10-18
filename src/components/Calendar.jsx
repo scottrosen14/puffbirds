@@ -14,9 +14,14 @@ class Calendar extends React.Component {
   
   constructor(props) {
     super(props);
-    this.state = { selectedDay: 1 };
+    this.state = { selectedDay: 1, dayViewDisplay: 'none', weekNum: 0, dayNum: 0, eventButtons: false };
     this.updateStateWithData = this.updateStateWithData.bind(this);
     this.createEventData = this.createEventData.bind(this);
+    this.showDay = this.showDay.bind(this);
+    this.cancelDayView = this.cancelDayView.bind(this);
+    this.addEvent = this.addEvent.bind(this);
+    this.eventRowSelected = this.eventRowSelected.bind(this);
+    this.deleteEvent = this.deleteEvent.bind(this);
   }
 
   componentWillMount() {
@@ -30,6 +35,43 @@ class Calendar extends React.Component {
     this.updateStateWithData(month, year);
   }
 
+  addEvent(eventStr) {
+    console.log("eventStr", eventStr);
+    
+    axios.post('/api/cal/addevent', {
+      clientemail: "this@hardCoded.com",
+      month: this.state.month,
+      year: this.state.year,
+      day: this.state.selectedDay,
+      event: eventStr
+    })
+    .then((response) => {
+      this.updateStateWithData(this.state.month, this.state.year)    
+    })
+    .catch(function (error) {
+      console.log("ERROR: ", error);
+    });
+
+  }
+
+  cancelDayView() {
+    document.getElementById('event-input').value = '';
+    this.setState({ dayViewDisplay: 'none', eventButtons: false });
+  }
+
+  showDay(weekNum, dayNum, selectedDay) {
+    this.setState({ dayViewDisplay: 'flex', weekNum, dayNum, selectedDay });
+  }
+
+  eventRowSelected() {
+    this.setState({ eventButtons: true });
+  }
+
+  deleteEvent() {
+      console.log("deleteEvent", deleteEvent);
+      
+
+  }
 
   createEventData(month, year) {
     const eventData = Array(6).fill(null).map(week => Array(7).fill(null).map(day => new Object()));
@@ -68,7 +110,7 @@ class Calendar extends React.Component {
     const body = { month, year };
 
     const that = this;
-     axios.post('/api/cal', {
+    axios.post('/api/cal', {
       month,
       year
     })
@@ -107,7 +149,7 @@ class Calendar extends React.Component {
       that.setState({ month, year, eventData });
     })
     .catch(function (error) {
-      console.log("SCOTT ERROR: ", error);
+      console.log("ERROR: ", error);
     });
   };
 
@@ -124,20 +166,27 @@ class Calendar extends React.Component {
     
     const weekArr = [];
     for (let i = 0; i < 6; i += 1) {
-      weekArr.push(<Week key={i+'week'} weeksData={this.state.eventData[i]} weekNum={i} />);
+      weekArr.push(<Week key={i+'week'} weeksData={this.state.eventData[i]} weekNum={i} showDay={this.showDay} />);
     }
 
     return (
       <div>
-        <DayView month={this.state.year} year={this.state.year} day={this.state.selectedDay} />
+        
         <Paper style={infiniteStyle} zDepth={5}>
           <div id="TMS">
             <h1>CALENDAR</h1>
             <div className="container" >
-              <CalendarHeading month={this.state.month} year={this.state.year} updateStateWithData={this.updateStateWithData} />
-              <div className="calendar"> 
-                {weekArr}
-              </div>
+              <DayView month={this.state.month} year={this.state.year} day={this.state.selectedDay} 
+                        dayData={this.state.eventData[this.state.weekNum][this.state.dayNum][this.state.selectedDay]} 
+                        dayViewDisplay={this.state.dayViewDisplay} cancelDayView={this.cancelDayView} 
+                        addEvent={this.addEvent} eventRowSelected={this.eventRowSelected} eventButtons={this.state.eventButtons}
+                        deleteEvent={this.deleteEvent}/> 
+              <div className="calendar-container">
+                <CalendarHeading month={this.state.month} year={this.state.year} updateStateWithData={this.updateStateWithData} />
+                <div className="calendar"> 
+                  {weekArr}
+                </div>
+              </div>  
             </div>
           </div>
         </Paper>
