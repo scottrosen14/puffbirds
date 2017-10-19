@@ -10,34 +10,44 @@ const todoController = {};
 ]
 */
 todoController.getTodo = (req, res, next) => { 
-  let results;  
+  const clientEmail = 'hard@coded.com';
+  const queryString = `SELECT * FROM todo WHERE client_email = '${clientEmail}'` ;
+
   // SQL Query > Select Data
-  const query = db.conn.query('SELECT * FROM "Todo";');
-  // Stream results back one row at a time
-  query.on('row', (row) => {
-    results = row.item;
-  });
-  // After all data is returned, close connection and return results
-  query.on('end', () => {
-    res.status(200).json(results);
+  db.conn.query(queryString, (err, data) => {
+    if (err) {
+      res.status(404).end({ error: 'Error Requesting Database', err });
+    }
+    res.status(200).json(data.rows);
     next();
-  });       
+  });
 };
 
 todoController.addTodo = (req, res, next) => { 
-
-  let results;
-  const data = req.body.data;
-  console.log(data);  
-  client.query('UPDATE "Todo" SET item = ($2) WHERE _id=($1)',
-    [1, data]);
-  
-  const query = client.query('SELECT * FROM "Todo";');
-  query.on('row', (row) => {
-    results = row;
+  const clientEmail = 'hard@coded.com';
+  const task = req.body.task;
+  const todoInputs = [task, clientEmail]
+  let queryString = 'INSERT INTO todo (item, client_email) VALUES ($1, $2)';
+   
+  db.conn.query(queryString, todoInputs, (err, result) => {
+    if (err) {
+      res.status(404).end({ error: 'Error Inserting to Database', err })
+    }
+    res.status(200);
+    next();
   });
-  query.on('end', function () {
-    res.status(200).json(results);
+};
+
+todoController.removeTodo = (req, res, next) => { 
+  const clientEmail = 'hard@coded.com';
+  const taskId = req.body.taskId;
+  let queryString = `DELETE FROM todo WHERE _id='${taskId}'`;
+   
+  db.conn.query(queryString, (err, result) => {
+    if (err) {
+      res.status(404).end({ error: 'Error Inserting to Database', err })
+    }
+    res.status(200);
     next();
   });
 };

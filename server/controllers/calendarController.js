@@ -85,6 +85,7 @@ calendarController.updateRow = (req, res, next) => {
       throw new Error(err);
     }
     res.json(result.rows);
+    res.status(200).send('Success inserting row');
     next();
   });
 }
