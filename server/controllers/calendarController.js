@@ -25,18 +25,32 @@ const calendarController = {};
 calendarController.getEvents = (req, res, next) => {
   const rows = [];
   // pg.connect(connectionStr, (err, client, done) => {
-  db.conn.query('SELECT * FROM events WHERE year=($1) AND month=($2) AND day=($3)', [req.body.year, req.body.month, req.body.day], (err, data) => {
-    // after querying the sql command, elephantsql passes a result object into the data parameter with the properties rows, fields, etc.
-    // the property rows is an array of objects
-    // place next() within the anonymous callback to avoid async issues
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('data', data);
-      res.json(data.rows);
-      next();
-    }
-  });
+  // to select all events
+  if(!req.body.date) {
+    db.conn.query('SELECT * FROM events', (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('result', result);
+        res.json(result.rows);
+        next();
+      }
+    });
+  } else {
+  // to select based on criteria
+    db.conn.query('SELECT * FROM events WHERE date=($1)', [req.body.date], (err, result) => {
+      // after querying the sql command, elephantsql passes a result object into the data parameter with the properties rows, fields, etc.
+      // the property rows is an array of objects
+      // place next() within the anonymous callback to avoid async issues
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('result', result);
+        res.json(result.rows);
+        next();
+      }
+    });
+  }
 }
 
 
@@ -45,8 +59,8 @@ calendarController.addRow = (req, res, next) => {
   // pass the query string as the first argument and the data as the second
   // console.log('body-------', req.body);
   // console.log('email-------', req.body.clientemail);
-  const data = [req.body.clientemail, req.body.year, req.body.month, req.body.day, req.body.event];
-  const queryStr = 'INSERT INTO events (clientemail, year, month, day, event) VALUES ($1, $2, $3, $4, $5)';
+  const data = [req.body.clientemail, req.body.date, req.body.event];
+  const queryStr = 'INSERT INTO events (clientemail, date, event) VALUES ($1, $2, $3)';
 
   db.conn.query(queryStr, data, (err, result) => {
     if (err) {
@@ -61,28 +75,35 @@ calendarController.addRow = (req, res, next) => {
 
 
 calendarController.updateRow = (req, res, next) => {
-  const queryStr = 'UPDATE events SET id=($1), event=($2) WHERE year=($3) AND month=($4) AND day=($5)';
-  const data = [req.body.id, req.body.event, req.body.year, req.body.month, req.body.day];
+  const queryStr = 'UPDATE events SET event=($1) WHERE _id=($2)';
+  const data = [req.body.event, req.body._id];
+  console.log('update', req.body);
   db.conn.query(queryStr, data, (err, result) => {
+    console.log('ROW', result)
     if (err) {
       console.log(err);
       throw new Error(err);
     }
+    res.json(result.rows);
     next();
   });
 }
 
 
 calendarController.removeRow = (req, res, next) => {
-  const queryStr = 'DELETE events'
-  const data = [];
-  // db.conn.query(queryStr, data, (err, result) => {
-  //   if (err) {
-  //     console.log(err);
-  //     throw new Error(err);
-  //   }
-  //   next();
-  // })
+  console.log('params------', req.body);
+  const queryStr = 'DELETE FROM events WHERE _id=($1) OR date>($2) AND date<($2)';
+  const data = [req.body._id, req.body.date];
+
+  db.conn.query(queryStr, data, (err, result) => {
+    if (err) {
+      console.log(err);
+      throw new Error(err);
+    } else {
+      res.json(result.rows);
+      next();
+    }
+  });
 }
 
 calendarController.addClientEmailColumn = (req, res, next) => {
