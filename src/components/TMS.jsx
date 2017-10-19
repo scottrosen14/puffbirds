@@ -3,6 +3,7 @@ import ToDoList from './ToDoList.jsx';
 import AddToDo from './AddToDo.jsx';
 import Paper from 'material-ui/Paper';
 import {grey300, purple50} from 'material-ui/styles/colors';
+import axios from 'axios';
 
 class TMS extends React.Component {
   constructor(props) {
@@ -18,33 +19,42 @@ class TMS extends React.Component {
   }
 
   componentWillMount() {
-    fetch('/api/todo')
-      .then(response => response.json())
-      .then(data => {
-        return this.setState({ data: data });
-      });
+    axios.get('/api/todo')
+    .then((response) => {
+      this.setState({ data: response.data });
+    })
+    .catch((error) => {
+      console.log("ERROR: ", error);
+    });
   }
 
   addTask(task) {
-    const data = [...this.state.data, task];
-    this.setState({ data: data });
-    fetch()
+    axios.post('/api/todo/add', { task })
+    .then((response) => {
+      this.setState({ data: response.data });
+    })
+    .catch((error) => {
+      console.log("ERROR: ", error);
+    });
   }
 
-  removeTask(task) {
-    let data = [...this.state.data];
-    data.splice(data.indexOf(task), 1);
-    this.setState({ data: data });
-
+  removeTask(taskId) {
+    axios.post('/api/todo/remove', { taskId })
+    .then((response) => {
+      this.setState({ data: response.data });
+    })
+    .catch((error) => {
+      console.log("ERROR: ", error);
+    });  
   }
 
-  updateData() {
-    let data = this.state;
-    fetch('/api/todos', {
-    method: "POST",
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data) });
-  }
+  // updateData() {
+  //   let data = this.state;
+  //   fetch('/api/todos', {
+  //   method: "POST",
+  //   headers: {'Content-Type': 'application/json'},
+  //   body: JSON.stringify(data) });
+  // }
   
 
   render() {

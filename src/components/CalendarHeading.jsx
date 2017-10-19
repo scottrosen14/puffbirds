@@ -42,6 +42,8 @@ const CalendarHeading = (props) => {
       <button className="button button-hover-shadow" onClick={backwardClicked}>{'\u25c0'}</button>  
       <div className="cal-heading-center">
         <div className="cal-heading-text"> {monthName} {year} </div>
+        <div className="cal-select_ui"> back </div>
+
       </div>
       <button className="button button-hover-shadow" onClick={forwardClicked}>{'\u25b6'}</button>
     </div>

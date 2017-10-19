@@ -41,11 +41,28 @@
   background-color: #DEAA39;
   width: 250px;
   height: 60px;
+  position: relative;
 }
 
 .cal-heading-text {
+  position: absolute;
+  top: 0px;
+  left: 0px;
   z-index: 3;
+  width: 100%;
   background-color: purple;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 0px;
+}
+
+.cal-select_ui {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+  width: 100%;
+  background-color: blue;
   font-size: 18px;
   font-weight: bold;
   margin-top: 0px;

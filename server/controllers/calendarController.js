@@ -30,7 +30,7 @@ calendarController.getEvents = (req, res, next) => {
     // the property rows is an array of objects
     // place next() within the anonymous callback to avoid async issues
     if (err) {
-      console.log('Error: ', err);
+      console.log('Error CAL GET: ', err);
     } else {
       res.status(200).json(data.rows);
       next();
@@ -74,6 +74,7 @@ calendarController.updateRow = (req, res, next) => {
 
 
 calendarController.removeRow = (req, res, next) => {
+  
   const queryStr = 'DELETE events'
   const data = [];
   // db.conn.query(queryStr, data, (err, result) => {

@@ -6,7 +6,8 @@ import Button from './Button.jsx';
 
 const DayView = (props) => {
 
-  const { month, year, day, dayData, dayViewDisplay, cancelDayView, addEvent, eventRowSelected, eventButtons } = props;
+  const { month, year, day, dayData, dayViewDisplay, cancelDayView, addEvent, eventRowSelected, 
+          eventButtons, deleteEvent } = props;
 
   const date = new Date(year, month-1, day);
 
@@ -26,11 +27,13 @@ const DayView = (props) => {
   }
 
   function updateClicked() {
+      console.log("updateClicked", updateClicked);
 
   }
 
   function deleteClicked() {
-    
+      console.log("deleteClicked", deleteClicked);
+
   }
 
   const buttonsArr = [];
